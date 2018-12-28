@@ -1,7 +1,10 @@
+package view;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+
 
 public class LoginFrame extends JFrame {
 
@@ -28,10 +31,9 @@ public class LoginFrame extends JFrame {
         loginLabel.setLabelFor(passwordField);
         contentPane.add(passwordField);
 
-        JLabel emptyLabel = new JLabel("");
-        contentPane.add(emptyLabel );
+        JButton cancelButton = new JButton("Cancel");
+        contentPane.add(cancelButton);
         JButton loginButton = new JButton("Login");
-        emptyLabel.setLabelFor(loginButton);
         contentPane.add(loginButton);
 
 
@@ -50,13 +52,21 @@ public class LoginFrame extends JFrame {
                 String password = new String(passwordField.getPassword());
 
                 if (login.equals("admin")  &&  password.equals("toor")) {
-                    JOptionPane.showMessageDialog(LoginFrame.this, "thank you for using java");
+                    new UserFrame();
+                    LoginFrame.this.dispose();
                 } else {
-                    JOptionPane.showMessageDialog(LoginFrame.this, "Wrong login parametrs");
+                    JOptionPane.showMessageDialog(LoginFrame.this,"Wrong login parametr" , "Login error", JOptionPane.ERROR_MESSAGE);
                 }
 
-                System.out.println(login);
-                System.out.println(password);
+            }
+        });
+
+        cancelButton.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                LoginFrame.this.dispose();
+
             }
         });
 
