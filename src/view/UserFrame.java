@@ -7,7 +7,9 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+
 import java.io.IOException;
+
 
 public class UserFrame extends JFrame {
 
@@ -17,12 +19,14 @@ public class UserFrame extends JFrame {
 
         setLayout(new BorderLayout());
 
+
         UserController userController=new UserController();
 
         FormPanel formPanel=new FormPanel();
         TablePanel tablePanel=new TablePanel();
 
         tablePanel.setData(userController.getUsers());
+
 
         JMenuBar menuBar = new JMenuBar();
 
@@ -31,6 +35,7 @@ public class UserFrame extends JFrame {
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
+
 
         JMenuItem importItem = new JMenuItem("Import");
         importItem.setMnemonic(KeyEvent.VK_I);
@@ -53,6 +58,7 @@ public class UserFrame extends JFrame {
         fileMenu.add(exitItem);
 
         setJMenuBar(menuBar);
+
 
         JFileChooser fileChooser=new JFileChooser();
         fileChooser.addChoosableFileFilter(new UserFileFilter());
@@ -90,7 +96,6 @@ public class UserFrame extends JFrame {
 
             }
         });
-
 
         logoutItem.addActionListener(new ActionListener() {
             @Override
@@ -131,7 +136,6 @@ public class UserFrame extends JFrame {
 
             }
         });
-
 
 
         formPanel.setFormListener(new FormListener() {

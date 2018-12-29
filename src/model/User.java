@@ -5,6 +5,7 @@ import java.io.Serializable;
 public class User implements Serializable {
 
     private static final long serialVersionUID = 5284219126584857598L;
+
     private static int count=0;
 
     private int id;
@@ -16,6 +17,7 @@ public class User implements Serializable {
         this.count=size;
     }
 
+
     public User(String login, String email, String password) {
         this.login = login;
         this.email = email;
@@ -24,8 +26,6 @@ public class User implements Serializable {
         this.id=count;
         count++;
     }
-
-
 
     public int getId() {
         return id;
