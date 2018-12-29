@@ -4,6 +4,8 @@ import model.User;
 import model.Users;
 import view.FormEvent;
 
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 
 
@@ -27,5 +29,13 @@ public class UserController {
 
         users.addUser(user);
 
+    }
+
+    public void saveToFile(File file) throws IOException {
+        users.saveToFile(file);
+    }
+
+    public void loadToFile(File file) throws IOException {
+        users.loadToFile(file);
     }
 }

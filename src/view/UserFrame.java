@@ -7,6 +7,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.io.IOException;
 
 public class UserFrame extends JFrame {
 
@@ -16,6 +17,13 @@ public class UserFrame extends JFrame {
 
         setLayout(new BorderLayout());
 
+        UserController userController=new UserController();
+
+        FormPanel formPanel=new FormPanel();
+        TablePanel tablePanel=new TablePanel();
+
+        tablePanel.setData(userController.getUsers());
+
         JMenuBar menuBar = new JMenuBar();
 
         menuBar.setPreferredSize(new Dimension(100, 25));
@@ -23,6 +31,16 @@ public class UserFrame extends JFrame {
         JMenu fileMenu = new JMenu("File");
         fileMenu.setMnemonic(KeyEvent.VK_F);
         menuBar.add(fileMenu);
+
+        JMenuItem importItem = new JMenuItem("Import");
+        importItem.setMnemonic(KeyEvent.VK_I);
+        fileMenu.add(importItem);
+
+        JMenuItem exportItem = new JMenuItem("Export");
+        exportItem.setMnemonic(KeyEvent.VK_E);
+        fileMenu.add(exportItem);
+
+        fileMenu.addSeparator();
 
         JMenuItem logoutItem = new JMenuItem("Logout");
         logoutItem.setMnemonic(KeyEvent.VK_L);
@@ -35,6 +53,44 @@ public class UserFrame extends JFrame {
         fileMenu.add(exitItem);
 
         setJMenuBar(menuBar);
+
+        JFileChooser fileChooser=new JFileChooser();
+        fileChooser.addChoosableFileFilter(new UserFileFilter());
+
+        importItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (fileChooser.showOpenDialog(UserFrame.this)==JFileChooser.APPROVE_OPTION) {
+
+                    try {
+                        userController.loadToFile(fileChooser.getSelectedFile());
+                        tablePanel.refresh();
+                    } catch (IOException el){
+                        JOptionPane.showMessageDialog(UserFrame.this, "Could not load data file from", "Error file",JOptionPane.WARNING_MESSAGE);
+                    }
+
+                }
+
+            }
+        });
+
+        exportItem.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+
+                if (fileChooser.showSaveDialog(UserFrame.this)==JFileChooser.APPROVE_OPTION) {
+                    try {
+                        userController.saveToFile(fileChooser.getSelectedFile());
+                    } catch (IOException el){
+                        JOptionPane.showMessageDialog(UserFrame.this, "Could not save data to file", "Error file",JOptionPane.WARNING_MESSAGE);
+                    }
+
+                }
+
+            }
+        });
+
 
         logoutItem.addActionListener(new ActionListener() {
             @Override
@@ -76,12 +132,7 @@ public class UserFrame extends JFrame {
             }
         });
 
-        FormPanel formPanel=new FormPanel();
-        TablePanel tablePanel=new TablePanel();
 
-        UserController userController=new UserController();
-
-        tablePanel.setData(userController.getUsers());
 
         formPanel.setFormListener(new FormListener() {
             public void formEventOccurred(FormEvent e) {

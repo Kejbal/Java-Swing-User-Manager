@@ -1,13 +1,20 @@
 package model;
 
-public class User {
+import java.io.Serializable;
 
+public class User implements Serializable {
+
+    private static final long serialVersionUID = 5284219126584857598L;
     private static int count=0;
 
     private int id;
     private String login;
     private String email;
     private String password;
+
+    public User(int size) {
+        this.count=size;
+    }
 
     public User(String login, String email, String password) {
         this.login = login;
@@ -17,6 +24,8 @@ public class User {
         this.id=count;
         count++;
     }
+
+
 
     public int getId() {
         return id;
